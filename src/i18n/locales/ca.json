@@ -1,0 +1,10 @@
+{
+  "login": {
+    "email": "Entra el teu correu",
+    "password": "Entra la contrasenya",
+    "button": "Entrar",
+    "forgotPassword": "Heu oblidat la contrasenya?",
+    "noAccount": "Encara no tens conta?",
+    "signUp": "Registrat" 
+  }
+}

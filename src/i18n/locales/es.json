@@ -1,0 +1,10 @@
+{
+  "login": {
+    "email": "Entra tu correo",
+    "password": "Entra tu contraseña",
+    "button": "Entrar",
+    "forgotPassword": "¿Has olvidado la contraseña?",
+    "noAccount": "¿Aun no tienes cuenta?",
+    "signUp": "Registrate" 
+  }
+}
