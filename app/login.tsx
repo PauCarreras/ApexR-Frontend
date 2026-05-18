@@ -43,15 +43,16 @@ export default function LoginScreen() {
             secureTextEntry={true}
           />
           <View style={styles.forgotPasswordContainer}>
-            <Pressable>
+            <Pressable
+              onPress={() => router.push("/forgotPwd")}
+            >
               <Text style={styles.forgotPasswordStyle}>
                 {t("login.forgotPassword")}
               </Text>
             </Pressable>
           </View>
-          <Pressable 
+          <Pressable
             style={styles.buttonStyle}
-            onPress={()=>router.push("/register")}
           >
             <Text style={styles.buttonText}>{t("login.button")}</Text>
           </Pressable>
@@ -60,7 +61,9 @@ export default function LoginScreen() {
           <Text style={styles.signupText}>
             {t("login.noAccount")}
           </Text>
-          <Pressable>
+          <Pressable
+            onPress={() => router.push("/register")}
+          >
             <Text style={styles.signupLink}>
               {t("login.signUp")}
             </Text>
@@ -80,12 +83,12 @@ const styles = StyleSheet.create({
     height: logoSize,
   },
   logoLayer: {
-    flex:1,
+    flex: 1,
     alignItems: "center",
     paddingTop: "10%",
 
   },
-  form:{
+  form: {
     width: "80%",
     marginTop: "15%",
     alignContent: "center",
@@ -100,9 +103,9 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 16,
   },
-  buttonStyle:{
+  buttonStyle: {
     height: 48,
-    borderRadius:10,
+    borderRadius: 10,
     marginTop: "12%",
     minHeight: 40,
     backgroundColor: "rgba(250, 24, 43, 0.8)",
@@ -119,13 +122,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginTop: 6,
   },
-  forgotPasswordStyle:{
-    color:"#FFFFFF",
+  forgotPasswordStyle: {
+    color: "#FFFFFF",
     fontSize: 11,
   },
   signupRow: {
-    width:"80%",
-    flexDirection:"row",
+    width: "80%",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 16,

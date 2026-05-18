@@ -5,6 +5,10 @@
     "button": "Sign In",
     "forgotPassword": "forgotPassword?",
     "noAccount": "Don't have an account?",
-    "signUp": "Sign In" 
+    "signUp": "Sign In"
+  },
+  "register": {
+    "createAccount": "Create an account",
+    "joinUs": "Join the ApexR community"
   }
 }

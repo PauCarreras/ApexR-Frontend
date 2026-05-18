@@ -5,6 +5,10 @@
     "button": "Entrar",
     "forgotPassword": "Heu oblidat la contrasenya?",
     "noAccount": "Encara no tens conta?",
-    "signUp": "Registrat" 
+    "signUp": "Registrat"
+  },
+  "register": {
+    "createAccount": "Crea un compte",
+    "joinUs": "Uneix-te a la familia d'ApexR"
   }
 }
