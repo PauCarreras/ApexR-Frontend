@@ -1,16 +1,14 @@
-import { useTranslation } from "react-i18next";
 import HeaderWithBackandImage from "@/components/HeaderBackButtons";
-import { useFonts, Bungee_400Regular } from "@expo-google-fonts/bungee";
-import { Inter_500Medium } from "@expo-google-fonts/inter";
-
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useTranslation } from "react-i18next";
 import {
-    ImageBackground,
-    StyleSheet,
-    View,
-    Image,
-    Text,
     Dimensions,
+    ImageBackground,
+    Pressable,
+    StyleSheet,
+    Text,
     TextInput,
+    View
 } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -33,11 +31,42 @@ export default function LoginScreen() {
                     {t("register.joinUs")}
                 </Text>
                 <View style={styles.dataLayer}>
+                    <Ionicons name="person-outline" size={24} color="rgba(138, 138, 138, 0.66)" paddingRight={10} />
                     <TextInput
                         placeholder="Full name"
                         placeholderTextColor="#8A8A8A"
                         autoCapitalize="none"
                     />
+                </View>
+                <View style={styles.dataLayer}>
+                    <Ionicons name="mail-outline" size={24} color="rgba(138, 138, 138, 0.66)" paddingRight={10} />
+                    <TextInput
+                        placeholder="Email"
+                        placeholderTextColor="#8A8A8A"
+                        autoCapitalize="none"
+                    />
+                </View>
+                <View style={styles.dataLayer}>
+                    <Ionicons name="lock-closed-outline" size={24} color="rgba(138, 138, 138, 0.66)" paddingRight={10} />
+                    <TextInput
+                        placeholder="Password"
+                        placeholderTextColor="#8A8A8A"
+                        autoCapitalize="none"
+                        secureTextEntry={true}
+                    />
+                    <Ionicons name="eye-outline" size={24} color="rgba(138, 138, 138, 0.66)"  />
+                </View>
+                <View style={styles.dataLayer}>
+                    <Ionicons name="lock-closed-outline" size={24} color="rgba(138, 138, 138, 0.66)" paddingRight={10} />
+                    <TextInput
+                        placeholder="Confirm password"
+                        placeholderTextColor="#8A8A8A"
+                        autoCapitalize="none"
+                        secureTextEntry={true}
+                    />
+                    <Pressable style={styles.row}>
+                        <Ionicons name="eye-outline" size={24} color="rgba(138, 138, 138, 0.66)" />
+                    </Pressable>
                 </View>
             </View>
 
@@ -47,6 +76,12 @@ export default function LoginScreen() {
 
 }
 const styles = StyleSheet.create({
+    row:{
+        width: "20%",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        alignItems: "flex-end",
+    },
     background: {
         flex: 1,
     },
@@ -79,6 +114,7 @@ const styles = StyleSheet.create({
     },
     dataLayer: {
         marginTop: "3%",
+        paddingLeft: 10,
         width: "80%",
         flexDirection: "row",
         alignItems: "center",
