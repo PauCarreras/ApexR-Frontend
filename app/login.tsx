@@ -53,6 +53,7 @@ export default function LoginScreen() {
           </View>
           <Pressable
             style={styles.buttonStyle}
+            onPress={() => router.push("/main")}
           >
             <Text style={styles.buttonText}>{t("login.button")}</Text>
           </Pressable>
