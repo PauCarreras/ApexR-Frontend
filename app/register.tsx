@@ -1,9 +1,9 @@
 import HeaderWithBackandImage from "@/components/HeaderBackButtons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { useTranslation } from "react-i18next";
-import React, { useState } from "react";
-import { router } from "expo-router";
 import { colors } from "@/constants/colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { router } from "expo-router";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
     Dimensions,
@@ -14,7 +14,6 @@ import {
     TextInput,
     View
 } from "react-native";
-import { Color } from "expo-router";
 
 const { width } = Dimensions.get("window");
 const logoSize = width * 0.6;

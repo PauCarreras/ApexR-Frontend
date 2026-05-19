@@ -1,18 +1,17 @@
-import { useTranslation } from "react-i18next";
-import { fonts } from "@/constants/fonts";
+import HeaderWithBackandImage from "@/components/HeaderBackButtons";
 import { colors } from "@/constants/colors";
+import { fonts } from "@/constants/fonts";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
-import HeaderWithBackandImage from "@/components/HeaderBackButtons";
+import { useTranslation } from "react-i18next";
 import {
-    ImageBackground,
-    StyleSheet,
-    View,
-    Text,
-    Image,
-    TextInput,
     Dimensions,
-    Pressable
+    ImageBackground,
+    Pressable,
+    StyleSheet,
+    Text,
+    TextInput,
+    View
 } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -102,6 +101,7 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
     },
     title: {
+        marginTop: "35%",
         fontFamily: fonts.title.default,
         fontSize: 24,
         fontWeight: 900,

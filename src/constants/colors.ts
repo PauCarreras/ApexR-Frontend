@@ -4,6 +4,8 @@ export const colors ={
     },
     text:{
         default: "#8A8A8A",
+        title: "#FFFFFF",
+        red: "#ff0000a2"
     },
     button:{
         default: "#ff0000a2",
