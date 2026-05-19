@@ -9,6 +9,23 @@
   },
   "register": {
     "createAccount": "Crea un compte",
-    "joinUs": "Uneix-te a la familia d'ApexR"
+    "joinUs": "Uneix-te a la familia d'ApexR",
+    "name": "Nom",
+    "email": "Email",
+    "password": "Contrasenya",
+    "confirmPassword": "Confirma la contrasenya",
+    "caracters": "Minim 8 caracters",
+    "mayus": "Almenys una majuscula",
+    "number": "Almenys un numero",
+    "button": "Registrar-se",
+    "haveAccount": "Ja tens compte?",
+    "signIn": "Inicia sessió",
+    "passwordsDontMatch": "Les contrasenyes no coincideixen"
+  },
+  "forgotPassword": {
+    "title": "REINICIAR CONTRASENYA",
+    "instructions": "Entra el teu correu electrònic i t'enviarem les instruccions per restablir la teva contrasenya.",
+    "mail": "Entra el teu correu",
+    "button": "Enviar mail"
   }
 }

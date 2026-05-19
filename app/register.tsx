@@ -1,6 +1,10 @@
 import HeaderWithBackandImage from "@/components/HeaderBackButtons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
+import { router } from "expo-router";
+import { colors } from "@/constants/colors";
+
 import {
     Dimensions,
     ImageBackground,
@@ -10,12 +14,31 @@ import {
     TextInput,
     View
 } from "react-native";
+import { Color } from "expo-router";
 
 const { width } = Dimensions.get("window");
 const logoSize = width * 0.6;
 
 export default function LoginScreen() {
     const { t } = useTranslation();
+    const [showPassword, setShowPassword] = useState(false);
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const passwordRules = [
+        {
+            label: t("register.caracters"),
+            valid: password.length >= 8,
+        },
+        {
+            label: t("register.mayus"),
+            valid: /[A-Z]/.test(password),
+        },
+        {
+            label: t("register.number"),
+            valid: /\d/.test(password),
+        },
+    ];
     return (
         <ImageBackground
             source={require("@/assets/images/background.png")}
@@ -31,41 +54,101 @@ export default function LoginScreen() {
                     {t("register.joinUs")}
                 </Text>
                 <View style={styles.dataLayer}>
-                    <Ionicons name="person-outline" size={24} color="rgba(138, 138, 138, 0.66)" paddingRight={10} />
+                    <Ionicons name="person-outline" size={24} color={colors.border.default} paddingRight={10} />
                     <TextInput
-                        placeholder="Full name"
-                        placeholderTextColor="#8A8A8A"
+                        placeholder={t("register.name")}
+                        placeholderTextColor={colors.text.default}
                         autoCapitalize="none"
+                        style={styles.input}
                     />
                 </View>
                 <View style={styles.dataLayer}>
-                    <Ionicons name="mail-outline" size={24} color="rgba(138, 138, 138, 0.66)" paddingRight={10} />
+                    <Ionicons name="mail-outline" size={24} color={colors.border.default} paddingRight={10} />
                     <TextInput
-                        placeholder="Email"
-                        placeholderTextColor="#8A8A8A"
+                        placeholder={t("register.email")}
+                        placeholderTextColor={colors.text.default}
                         autoCapitalize="none"
+                        style={styles.input}
                     />
                 </View>
                 <View style={styles.dataLayer}>
-                    <Ionicons name="lock-closed-outline" size={24} color="rgba(138, 138, 138, 0.66)" paddingRight={10} />
+                    <Ionicons name="lock-closed-outline" size={24} color={colors.border.default} paddingRight={10} />
                     <TextInput
-                        placeholder="Password"
-                        placeholderTextColor="#8A8A8A"
+                        placeholder={t("register.password")}
+                        placeholderTextColor={colors.text.default}
                         autoCapitalize="none"
-                        secureTextEntry={true}
+                        secureTextEntry={!showPassword}
+                        style={styles.input}
+                        value={password}
+                        onChangeText={setPassword}
                     />
-                    <Ionicons name="eye-outline" size={24} color="rgba(138, 138, 138, 0.66)"  />
+                    <Pressable style={styles.row} onPress={() => setShowPassword(v => !v)}>
+                        <Ionicons name={showPassword ? "eye-off-outline" : "eye-outline"} size={24} color={colors.border.default} />
+                    </Pressable>
                 </View>
                 <View style={styles.dataLayer}>
-                    <Ionicons name="lock-closed-outline" size={24} color="rgba(138, 138, 138, 0.66)" paddingRight={10} />
+                    <Ionicons name="lock-closed-outline" size={24} color={colors.border.default} paddingRight={10} />
                     <TextInput
-                        placeholder="Confirm password"
-                        placeholderTextColor="#8A8A8A"
+                        placeholder={t("register.confirmPassword")}
+                        placeholderTextColor={colors.text.default}
                         autoCapitalize="none"
-                        secureTextEntry={true}
+                        secureTextEntry={!showConfirmPassword}
+                        style={styles.input}
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
                     />
-                    <Pressable style={styles.row}>
-                        <Ionicons name="eye-outline" size={24} color="rgba(138, 138, 138, 0.66)" />
+                    <Pressable style={styles.row} onPress={() => setShowConfirmPassword(v => !v)}>
+                        <Ionicons name={showConfirmPassword ? "eye-off-outline" : "eye-outline"} size={24} color={colors.border.default} />
+                    </Pressable>
+                </View>
+                <View style={{ gap: 14, marginTop: 20, }}>
+                    {passwordRules.map((rule) => (
+                        <View
+                            key={rule.label}
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "flex-start",
+                                gap: 12,
+                            }}
+                        >
+                            <Ionicons
+                                name={rule.valid ? "checkmark-circle" : "ellipse-outline"}
+                                size={24}
+                                color={rule.valid ? colors.information.valid : colors.information.invalid}
+                            />
+
+                            <Text
+                                style={{
+                                    color: rule.valid ? colors.information.valid : colors.information.invalid,
+                                    fontSize: 16,
+                                }}
+                            >
+                                {rule.label}
+                            </Text>
+                        </View>
+                    ))}
+                </View>
+                <View>
+                    <Text
+                        style={{ color: colors.information.invalid, opacity: password !== confirmPassword ? 1 : 0 }}
+                    >
+                        {t("register.passwordsDontMatch")}
+                    </Text>
+                    <Pressable
+                        style={styles.buttonStyle}
+                        onPress={() => router.back()}
+                    >
+                        <Text style={styles.buttonText}>{t("register.button")}</Text>
+                    </Pressable>
+                </View>
+                <View style={{ alignItems: "center", marginTop: 20, flexDirection: "row", gap: "3%" }}>
+                    <Text style={{ color: colors.text.default, }}>
+                        {t("register.haveAccount")}
+                    </Text>
+                    <Pressable onPress={() => router.back()}>
+                        <Text style={{ color: colors.link.default, textDecorationLine: "underline" }}>
+                            {t("register.signIn")}
+                        </Text>
                     </Pressable>
                 </View>
             </View>
@@ -76,11 +159,31 @@ export default function LoginScreen() {
 
 }
 const styles = StyleSheet.create({
-    row:{
+    buttonStyle: {
+        height: 48,
+        borderRadius: 10,
+        marginTop: "5%",
+        minHeight: 40,
+        backgroundColor: colors.button.default,
+        justifyContent: "center",
+        alignItems: "center"
+
+    },
+    buttonText: {
+        color: colors.button.text,
+        fontSize: 16,
+        fontWeight: "600",
+    },
+    input: {
+        flex: 1,
+        color: colors.text.default
+    },
+    row: {
         width: "20%",
         flexDirection: "row",
         justifyContent: "flex-end",
         alignItems: "flex-end",
+        marginRight: 10
     },
     background: {
         flex: 1,
@@ -120,7 +223,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderWidth: 1,
         borderRadius: 15,
-        borderColor: "rgba(255,255,255,0.18)",
+        borderColor: colors.border.default,
         backgroundColor: "rgba(0,0,0,0.28)",
     }
 })

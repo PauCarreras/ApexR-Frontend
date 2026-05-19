@@ -8,7 +8,24 @@
     "signUp": "Registrate"
   },
   "register": {
-    "createAccount": "Crea una cuenta",
-    "joinUs": "Unete a la familia d'ApexR"
+    "createAccount": "Crear cuenta",
+    "joinUs": "Unete a la familia de ApexR",
+    "name": "Nombre",
+    "email": "Correo",
+    "password": "Contraseña",
+    "confirmPassword": "Confirma la contraseña",
+    "caracters": "Minimo 8 caracteres",
+    "mayus": "Almenos una mayuscula",
+    "number": "Almenos un numero",
+    "button": "Registrar-se",
+    "haveAccount": "¿Ya tienes cuenta?",
+    "signIn": "Inicia session",
+    "passwordsDontMatch": "Las contraseñas no coiniciden"
+  },
+  "forgotPassword": {
+    "title": "REINICIAR CONTRASEÑA",
+    "instructions": "Entra tu correo y te enviaremos las instrucciones para restablecer tu contraseña.",
+    "mail": "Entra tu correo",
+    "button": "Enviar correo"
   }
 }

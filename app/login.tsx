@@ -31,14 +31,14 @@ export default function LoginScreen() {
         <View style={styles.form}>
           <TextInput
             placeholder={t("login.email")}
-            placeholderTextColor="rgba(255,255,255,0.2)"
+            placeholderTextColor="#8A8A8A"
             style={styles.input}
             keyboardType="email-address"
           >
           </TextInput>
           <TextInput
             placeholder={t("login.password")}
-            placeholderTextColor="rgba(255,255,255,0.2)"
+            placeholderTextColor="#8A8A8A"
             style={styles.input}
             secureTextEntry={true}
           />
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: "12%",
     minHeight: 40,
-    backgroundColor: "rgba(250, 24, 43, 0.8)",
+    backgroundColor: "#ff0000a2",
     justifyContent: "center",
     alignItems: "center"
 
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   forgotPasswordStyle: {
-    color: "#FFFFFF",
+    color: "#8A8A8A",
     fontSize: 11,
   },
   signupRow: {
@@ -132,15 +132,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 16,
-    gap: "29%"
+    gap: "15%"
   },
   signupText: {
-    color: "#FFFFFF",
+    color: "#8A8A8A",
     fontSize: 13,
     textAlign: "left",
   },
   signupLink: {
-    color: "#FFFFFF",
+    color: "#ff0000a2",
     fontSize: 13,
     textAlign: "right",
     textDecorationLine: "underline",

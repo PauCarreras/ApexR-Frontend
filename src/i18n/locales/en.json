@@ -3,12 +3,29 @@
     "email": "Enter your email",
     "password": "Enter password",
     "button": "Sign In",
-    "forgotPassword": "forgotPassword?",
+    "forgotPassword": "forgot Password?",
     "noAccount": "Don't have an account?",
-    "signUp": "Sign In"
+    "signUp": "Sign Up"
   },
   "register": {
     "createAccount": "Create an account",
-    "joinUs": "Join the ApexR community"
+    "joinUs": "Join the ApexR family",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "caracters": "At least 8 characters",
+    "mayus": "At least one uppercase",
+    "number": "At least one number",
+    "button": "Sign In",
+    "haveAccount": "Already got an account?",
+    "signIn": "Log In",
+    "passwordsDontMatch": "Passwords don't match"
+  },
+  "forgotPassword": {
+    "title": "RESET YOUR PASSWORD",
+    "instructions": "Enter your email and we'll send you instructions to reset your password.",
+    "mail": "Enter your email",
+    "button": "Send Email"
   }
 }
