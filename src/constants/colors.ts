@@ -1,9 +1,11 @@
 export const colors ={
     border: {
         default: "#8A8A8A",
+        dark: "#6969696e",
     },
     text:{
         default: "#8A8A8A",
+        dark: "#696969",
         title: "#FFFFFF",
         red: "#ff0000a2"
     },
