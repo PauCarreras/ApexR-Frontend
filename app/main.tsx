@@ -1,16 +1,21 @@
 import HeaderWithBackandImage from "@/components/HeaderBackButtons";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
+import { router } from "expo-router";
 import { Component } from "react";
 import { useTranslation } from "react-i18next";
+import { Ionicons } from "@expo/vector-icons";
 import {
     Dimensions,
     Image,
     ImageBackground,
     StyleSheet,
     Text,
-    View
+    View,
+    Pressable
 } from "react-native";
+import PerformanceStats from "@/components/NewComponent";
+import EventCarousel from "@/components/EventCarrousel";
 
 const { width } = Dimensions.get("window");
 const logoSize = width * 0.6;
@@ -43,32 +48,106 @@ export default function LoginScreen() {
                         <Text style={styles.level}>Level 100</Text>
                     </View>
                 </View>
-                <ImageBackground source={require("@/assets/images/eventBackground1.png")} resizeMode="cover" style={styles.eventViewer}>
-                    <View >
+                <EventCarousel></EventCarousel>
+                <View style={{ alignItems: "center", marginTop: 12, flexDirection: "row", gap: "3%" }}>
+                    <Text style={{ color: colors.text.title, fontWeight: "700" }}>
+                        Your Performance
+                    </Text>
+                    <Pressable onPress={() => router.back()} style={{ marginLeft: 'auto', flexDirection: "row", alignContent: "center" }}>
+                        <Text style={{ color: colors.link.default }}>
+                            View stats
 
-                        <Text style={{ color: colors.text.dark }}>
-                            No events yet, start one!
                         </Text>
+                        <Ionicons name="chevron-forward" size={18} color={colors.text.title} >
+
+                        </Ionicons>
+
+                    </Pressable>
+                </View>
+                <View style={{ flex: 1 }}>
+                    <PerformanceStats />
+                    <View style={styles.fastAccessSection}>
+                        <Text style={styles.fastAccessTitle}>Fast Access</Text>
+
+                        {/* Aquí irán luego los botones/cards */}
                     </View>
-                </ImageBackground>
+                </View>
+
             </View>
         </ImageBackground >
     );
 }
+
+
+
+const RADIUS = 8;
 const styles = StyleSheet.create({
-    eventViewer: {
-        marginTop: 10,
-        borderColor: colors.border.dark,
+    fastAccessSection: {
+        marginTop: 8,
+        width: "100%",
+        position: "absolute"
+    },
+
+    fastAccessTitle: {
+        color: "#FFFFFF",
+        fontSize: 16,
+        fontWeight: "400",
+    },
+    card: {
+        width: "100%",
+        height: 172,
         borderWidth: 1,
-        alignSelf: "center",
-        borderRadius: 12,
-        width: "90%",
-        height: "35%",
-        paddingLeft: "3%"
+        borderColor: "#6E6E6E",
+        borderRadius: RADIUS,
+        overflow: "hidden",
+        position: "relative",
+        backgroundColor: "#000",
+    },
+
+    cardImage: {
+        borderRadius: RADIUS,
+    },
+
+    darkOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: "rgba(0,0,0,0.42)",
+    },
+    content: {
+        width: "50%",
+        height: "100%",
+        paddingLeft: 16,
+        paddingTop: 12,
+        zIndex: 2,
+    },
+
+    nextText: {
+        color: "#FF1A1A",
+        fontSize: 14,
+        marginBottom: 8,
+    },
+
+    title: {
+        color: "#FFFFFF",
+        fontSize: 20,
+        fontWeight: "600",
+        marginBottom: 15,
+    },
+
+    infoRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 13,
+        gap: 8,
+    },
+
+    infoText: {
+        color: "#8A8A8A",
+        fontSize: 12,
+        fontStyle: "italic",
     },
     profilePic: {
-        width: width * 0.25,
-        height: width * 0.25,
+        width: width * 0.20,
+        height: width * 0.20,
         alignItems: "flex-end",
     },
     right: {
@@ -97,6 +176,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 14,
         flexDirection: "row",
+        marginBottom: "2%",
         width: "100%",
         alignItems: "center",
         overflow: "hidden",
