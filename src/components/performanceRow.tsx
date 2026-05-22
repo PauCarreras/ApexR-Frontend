@@ -36,14 +36,6 @@ const MOCK_STATS: StatItem[] = [
 export default function PerformanceStats() {
     return (
         <View style={styles.section}>
-            <View style={styles.header}>
-                <Text style={styles.title}>Your Performance</Text>
-
-                <View style={styles.statsLink}>
-                    <Text style={styles.statsLinkText}>View stats</Text>
-                    <Ionicons name="chevron-forward" size={15} color="#FF1A1A" />
-                </View>
-            </View>
 
             <View style={styles.cards}>
                 {MOCK_STATS.map((item) => (

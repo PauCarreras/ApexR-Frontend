@@ -16,10 +16,10 @@ type Props = {
 export default function HeaderWithBackAndImage({ image }: Props) {
     const { width, height } = useWindowDimensions();
 
-    const headerHeight = height * 0.2;
-    const imageSize = Math.min(width * 0.45, headerHeight * 1);
+    const headerHeight = height * 0.18;
+    const imageSize = Math.min(width * 0.4, headerHeight * 1);
     const buttonSize = Math.max(40, width * 0.11);
-    const iconSize = Math.max(16, Math.floor(buttonSize * 0.75));
+    const iconSize = Math.max(16, Math.floor(buttonSize * 0.65));
 
     return (
         <View style={[styles.container, { height: headerHeight }]}>

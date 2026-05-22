@@ -1,4 +1,5 @@
 import HeaderWithBackandImage from "@/components/HeaderBackButtons";
+import FastAccess from "@/components/fastAccessRow";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import { router } from "expo-router";
@@ -14,7 +15,7 @@ import {
     View,
     Pressable
 } from "react-native";
-import PerformanceStats from "@/components/NewComponent";
+import PerformanceStats from "@/components/performanceRow";
 import EventCarousel from "@/components/EventCarrousel";
 
 const { width } = Dimensions.get("window");
@@ -64,12 +65,11 @@ export default function LoginScreen() {
 
                     </Pressable>
                 </View>
-                <View style={{ flex: 1 }}>
+                <View>
                     <PerformanceStats />
                     <View style={styles.fastAccessSection}>
                         <Text style={styles.fastAccessTitle}>Fast Access</Text>
-
-                        {/* Aquí irán luego los botones/cards */}
+                        <FastAccess />
                     </View>
                 </View>
 
@@ -83,15 +83,15 @@ export default function LoginScreen() {
 const RADIUS = 8;
 const styles = StyleSheet.create({
     fastAccessSection: {
-        marginTop: 8,
         width: "100%",
-        position: "absolute"
+        position: "relative",
+        paddingTop: 8,
     },
 
     fastAccessTitle: {
         color: "#FFFFFF",
-        fontSize: 16,
-        fontWeight: "400",
+        fontSize: 15,
+        fontWeight: "700",
     },
     card: {
         width: "100%",
