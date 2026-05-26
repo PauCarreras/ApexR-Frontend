@@ -1,8 +1,12 @@
 {
   "login": {
-    "email": "Entra el teu correu",
+    "email": "Entra el teu correu o nom d'usuari",
     "password": "Entra la contrasenya",
     "button": "Entrar",
+    "requiredFields": "Introdueix l'usuari o correu i la contrasenya.",
+    "invalidCredentials": "Usuari o contrasenya incorrectes.",
+    "connectionError": "No s'ha pogut connectar amb el servidor.",
+    "requestError": "No s'ha pogut iniciar sessió.",
     "forgotPassword": "Heu oblidat la contrasenya?",
     "noAccount": "Encara no tens conta?",
     "signUp": "Registrat"
@@ -13,6 +17,14 @@
     "name": "Nom",
     "email": "Email",
     "password": "Contrasenya",
+    "invalidCredentials": "Credencials invalides",
+    "requestError": "No s'ha pogut efectuar el registre.",
+    "requiredFields": "Alguns camps no han estat completats",
+    "connectionError": "No s'ha pogut connectar amb el servidor.",
+    "emailAlreadyExists": "Ja existeix un compte amb aquest correu.",
+    "usernameAlreadyExists": "Aquest nom d'usuari ja esta en us.",
+    "invalidData": "Les dades introduides no son valides.",
+    "unexpectedError": "S'ha produit un error inesperat en registrar-te.",
     "confirmPassword": "Confirma la contrasenya",
     "caracters": "Minim 8 caracters",
     "mayus": "Almenys una majuscula",

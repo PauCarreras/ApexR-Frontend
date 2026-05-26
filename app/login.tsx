@@ -1,6 +1,8 @@
 import { router } from "expo-router";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   ImageBackground,
@@ -12,9 +14,53 @@ import {
 } from "react-native";
 const { width } = Dimensions.get("window");
 const logoSize = width * 0.7;
+const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "http://10.61.3.19:5000";
+
 
 export default function LoginScreen() {
   const { t } = useTranslation();
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = async () => {
+    if (!usernameOrEmail.trim() || !password) {
+      setError(t("login.requiredFields"));
+      return;
+    }
+
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          usernameOrEmail: usernameOrEmail.trim(),
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        setError(
+          response.status === 401
+            ? t("login.invalidCredentials")
+            : t("login.requestError")
+        );
+        return;
+      }
+
+      router.push("/main");
+    } catch {
+      setError(t("login.connectionError"));
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <ImageBackground
@@ -34,13 +80,18 @@ export default function LoginScreen() {
             placeholderTextColor="#8A8A8A"
             style={styles.input}
             keyboardType="email-address"
-          >
-          </TextInput>
+            autoCapitalize="none"
+            autoCorrect={false}
+            value={usernameOrEmail}
+            onChangeText={setUsernameOrEmail}
+          />
           <TextInput
             placeholder={t("login.password")}
             placeholderTextColor="#8A8A8A"
             style={styles.input}
             secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
           />
           <View style={styles.forgotPasswordContainer}>
             <Pressable
@@ -51,11 +102,20 @@ export default function LoginScreen() {
               </Text>
             </Pressable>
           </View>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
           <Pressable
-            style={styles.buttonStyle}
-            onPress={() => router.push("/main")}
+            style={({ pressed }) => [
+              styles.buttonStyle,
+              (pressed || isLoading) && styles.buttonDisabled,
+            ]}
+            onPress={handleLogin}
+            disabled={isLoading}
           >
-            <Text style={styles.buttonText}>{t("login.button")}</Text>
+            {isLoading ? (
+              <ActivityIndicator color="#FFFFFF" />
+            ) : (
+              <Text style={styles.buttonText}>{t("login.button")}</Text>
+            )}
           </Pressable>
         </View>
         <View style={styles.signupRow}>
@@ -100,7 +160,8 @@ const styles = StyleSheet.create({
     minHeight: 30,
     borderWidth: 1,
     marginTop: 12,
-    borderColor: "rgba(255,255,255,0.2)",
+    borderColor: "#8A8A8A",
+    color: "#8A8A8A",
     borderRadius: 15,
     paddingHorizontal: 16,
   },
@@ -118,6 +179,15 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
+  },
+  buttonDisabled: {
+    opacity: 0.65,
+  },
+  errorText: {
+    color: "#FF7272",
+    fontSize: 12,
+    marginTop: 12,
+    textAlign: "center",
   },
   forgotPasswordContainer: {
     alignItems: "flex-end",

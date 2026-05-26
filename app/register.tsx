@@ -18,12 +18,24 @@ import {
 const { width } = Dimensions.get("window");
 const logoSize = width * 0.6;
 
-export default function LoginScreen() {
+type RegisterErrorResponse = {
+    code?: string;
+    message?: string;
+};
+
+export default function RegisterScreen() {
     const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "http://10.61.3.19:5000";
+
     const passwordRules = [
         {
             label: t("register.caracters"),
@@ -38,6 +50,58 @@ export default function LoginScreen() {
             valid: /\d/.test(password),
         },
     ];
+
+    const HandleRegister = async () => {
+        if (!username.trim() || !password || !email.trim() || !confirmPassword.trim()) {
+            setError(t("register.requiredFields"));
+            return;
+        }
+
+        setError("");
+        setIsLoading(true);
+        try {
+            const response = await fetch(`${apiUrl}/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: username.trim(),
+                    email: email.trim(),
+                    password,
+                }),
+            });
+            if (!response.ok) {
+                const responseError: RegisterErrorResponse | null = await response
+                    .json()
+                    .catch(() => null);
+
+                switch (responseError?.code) {
+                    case "EMAIL_ALREADY_EXISTS":
+                        setError(t("register.emailAlreadyExists"));
+                        break;
+                    case "USERNAME_ALREADY_EXISTS":
+                        setError(t("register.usernameAlreadyExists"));
+                        break;
+                    case "INVALID_DATA":
+                        setError(t("register.invalidData"));
+                        break;
+                    case "UNEXPECTED_REGISTER_ERROR":
+                        setError(t("register.unexpectedError"));
+                        break;
+                    default:
+                        setError(t("register.requestError"));
+                }
+                return;
+            }
+            router.push("/login");
+        } catch {
+            setError(t("register.connectionError"));
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <ImageBackground
             source={require("@/assets/images/background.png")}
@@ -59,6 +123,8 @@ export default function LoginScreen() {
                         placeholderTextColor={colors.text.default}
                         autoCapitalize="none"
                         style={styles.input}
+                        value={username}
+                        onChangeText={setUsername}
                     />
                 </View>
                 <View style={styles.dataLayer}>
@@ -68,6 +134,8 @@ export default function LoginScreen() {
                         placeholderTextColor={colors.text.default}
                         autoCapitalize="none"
                         style={styles.input}
+                        value={email}
+                        onChangeText={setEmail}
                     />
                 </View>
                 <View style={styles.dataLayer}>
@@ -133,9 +201,14 @@ export default function LoginScreen() {
                     >
                         {t("register.passwordsDontMatch")}
                     </Text>
+                    {error ? <Text style={styles.errorText}>{error}</Text> : null}
                     <Pressable
-                        style={styles.buttonStyle}
-                        onPress={() => router.back()}
+                        style={({ pressed }) => [
+                            styles.buttonStyle,
+                            (pressed || isLoading) && styles.buttonDisabled,
+                        ]}
+                        onPress={HandleRegister}
+                        disabled={isLoading}
                     >
                         <Text style={styles.buttonText}>{t("register.button")}</Text>
                     </Pressable>
@@ -154,10 +227,18 @@ export default function LoginScreen() {
 
         </ImageBackground >
     );
-
-
 }
+
 const styles = StyleSheet.create({
+    buttonDisabled: {
+        opacity: 0.65,
+    },
+    errorText: {
+        color: "#FF7272",
+        fontSize: 12,
+        marginTop: 12,
+        textAlign: "center",
+    },
     buttonStyle: {
         height: 48,
         borderRadius: 10,

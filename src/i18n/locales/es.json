@@ -1,8 +1,12 @@
 {
   "login": {
-    "email": "Entra tu correo",
+    "email": "Entra tu correo o nombre de usuario",
     "password": "Entra tu contraseña",
     "button": "Entrar",
+    "requiredFields": "Completa el usuario o correo y la contraseña.",
+    "invalidCredentials": "Usuario o contraseña incorrectos.",
+    "connectionError": "No se ha podido conectar con el servidor.",
+    "requestError": "No se ha podido iniciar sesión.",
     "forgotPassword": "¿Has olvidado la contraseña?",
     "noAccount": "¿Aun no tienes cuenta?",
     "signUp": "Registrate"
@@ -14,6 +18,14 @@
     "email": "Correo",
     "password": "Contraseña",
     "confirmPassword": "Confirma la contraseña",
+    "invalidCredentials": "Credenciales invalidas",
+    "requestError": "No se pudo efectuar el registro.",
+    "requiredFields": "Algunos campos no han sido completados",
+    "connectionError": "No se ha podido conectar con el servidor.",
+    "emailAlreadyExists": "Ya existe una cuenta con este correo.",
+    "usernameAlreadyExists": "Este nombre de usuario ya está en uso.",
+    "invalidData": "Los datos introducidos no son válidos.",
+    "unexpectedError": "Ha ocurrido un error inesperado al registrarte.",
     "caracters": "Minimo 8 caracteres",
     "mayus": "Almenos una mayuscula",
     "number": "Almenos un numero",

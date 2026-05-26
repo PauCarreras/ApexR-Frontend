@@ -1,8 +1,12 @@
 {
   "login": {
-    "email": "Enter your email",
+    "email": "Enter your email or password",
     "password": "Enter password",
     "button": "Sign In",
+    "requiredFields": "Enter your username or email and password.",
+    "invalidCredentials": "Incorrect username or password.",
+    "connectionError": "Could not connect to the server.",
+    "requestError": "Could not sign in.",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "signUp": "Sign Up"
@@ -13,6 +17,14 @@
     "name": "Name",
     "email": "Email",
     "password": "Password",
+    "invalidCredentials": "Invalid credentials",
+    "requestError": "Could not register.",
+    "requiredFields": "Some fields are missing",
+    "connectionError": "Could not connect to the server.",
+    "emailAlreadyExists": "An account already exists with this email.",
+    "usernameAlreadyExists": "This username is already in use.",
+    "invalidData": "The entered data is not valid.",
+    "unexpectedError": "An unexpected error occurred while registering.",
     "confirmPassword": "Confirm password",
     "caracters": "At least 8 characters",
     "mayus": "At least one uppercase",
