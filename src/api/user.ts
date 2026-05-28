@@ -10,8 +10,7 @@ export type UserInfo = {
     CreatedAtUtc: string;
 }
 export async function GetUserInfo(): Promise<UserInfo> {
-    const response = await apiFetch("/users/me");
-    console.log(response)
+    const response = await apiFetch("/user/me");
     if (!response.ok){
         if(response.status === 401)
         {
