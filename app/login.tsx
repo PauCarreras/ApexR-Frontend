@@ -1,6 +1,8 @@
 import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { login } from "@/api/auth";
+import { saveToken } from "@/auth/tokenStorage";
 import {
   ActivityIndicator,
   Dimensions,
@@ -14,8 +16,6 @@ import {
 } from "react-native";
 const { width } = Dimensions.get("window");
 const logoSize = width * 0.7;
-const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "http://10.61.3.19:5000";
-
 
 export default function LoginScreen() {
   const { t } = useTranslation();
@@ -34,28 +34,20 @@ export default function LoginScreen() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          usernameOrEmail: usernameOrEmail.trim(),
-          password,
-        }),
-      });
-
-      if (!response.ok) {
-        setError(
-          response.status === 401
-            ? t("login.invalidCredentials")
-            : t("login.requestError")
-        );
+      const data = await login(usernameOrEmail.trim(), password);
+      await saveToken(data.accessToken);
+      router.replace("/main");
+    } catch (loginError) {
+      if (loginError instanceof Error && loginError.message === "INVALID_CREDENTIALS") {
+        setError(t("login.invalidCredentials"));
         return;
       }
 
-      router.push("/main");
-    } catch {
+      if (loginError instanceof Error && loginError.message === "LOGIN_REQUEST_ERROR") {
+        setError(t("login.requestError"));
+        return;
+      }
+
       setError(t("login.connectionError"));
     } finally {
       setIsLoading(false);

@@ -3,7 +3,7 @@ import FastAccess from "@/components/fastAccessRow";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import { router } from "expo-router";
-import { Component } from "react";
+import { GetUserInfo, UserInfo } from "@/api/user";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -13,16 +13,67 @@ import {
     StyleSheet,
     Text,
     View,
+    ActivityIndicator,
     Pressable
 } from "react-native";
 import PerformanceStats from "@/components/performanceRow";
 import EventCarousel from "@/components/EventCarrousel";
+import { useEffect, useState } from "react";
 
 const { width } = Dimensions.get("window");
 const logoSize = width * 0.6;
 
 export default function LoginScreen() {
     const { t } = useTranslation();
+    const [user, setUser] = useState<UserInfo | null>(null);
+    const [isLoadingUser, setIsLoadingUser] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        async function loadUser() {
+            try {
+                const currentUser = await GetUserInfo();
+                setUser(currentUser);
+            } catch (error) {
+                if (error instanceof Error && error.message === "UNAUTHORIZED") {
+                    router.replace("/login");
+                    return;
+                }
+                console.log(error);
+                setError("Could not load user info")
+            } finally {
+                setIsLoadingUser(false);
+            }
+        }
+        loadUser();
+    }, [])
+
+    if (isLoadingUser) {
+        return (
+            <ImageBackground
+                source={require("@/assets/images/background.png")}
+                resizeMode="cover"
+                style={styles.background}
+            >
+                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                    <ActivityIndicator color="#FFFFFF" />
+                </View>
+            </ImageBackground>
+        )
+    }
+    if (error) {
+        return (
+            <ImageBackground
+                source={require("@/assets/images/background.png")}
+                resizeMode="cover"
+                style={styles.background}
+            >
+                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                    <Text style={{ color: colors.text.red }}>{error}</Text>
+                </View>
+            </ImageBackground>
+        );
+    }
     return (
         <ImageBackground
             source={require("@/assets/images/background.png")}
@@ -34,7 +85,7 @@ export default function LoginScreen() {
                 <View style={styles.row}>
                     <View style={styles.left}>
                         <Text style={{ fontFamily: fonts.title.default, color: colors.text.title, fontSize: 22, alignContent: "flex-start" }}>
-                            Welcome, User!
+                            Welcome, {user?.DisplayName ?? "user"}!
                         </Text>
                         <Text style={{ fontFamily: fonts.subtitle.default, color: colors.text.default }}>
                             Get your driving to the next level
@@ -46,7 +97,7 @@ export default function LoginScreen() {
                             resizeMode="contain"
                             style={styles.profilePic}
                         />
-                        <Text style={styles.level}>Level 100</Text>
+                        <Text style={styles.level}>Level {user?.TotalXp ?? "0"}</Text>
                     </View>
                 </View>
                 <EventCarousel></EventCarousel>
