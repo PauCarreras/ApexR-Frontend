@@ -6,7 +6,7 @@ export type UserInfo = {
     Username: string;
     DisplayName: string | null;
     AvatarUrl: string | null;
-    TotalXp?:number;
+    totalXp?:number;
     CreatedAtUtc: string;
 }
 export async function GetUserInfo(): Promise<UserInfo> {

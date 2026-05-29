@@ -33,6 +33,7 @@ export default function LoginScreen() {
         async function loadUser() {
             try {
                 const currentUser = await GetUserInfo();
+                console.log("TotalXp: ", currentUser.totalXp);
                 setUser(currentUser);
             } catch (error) {
                 if (error instanceof Error && error.message === "UNAUTHORIZED") {
@@ -97,7 +98,7 @@ export default function LoginScreen() {
                             resizeMode="contain"
                             style={styles.profilePic}
                         />
-                        <Text style={styles.level}>Level {user?.TotalXp ?? "0"}</Text>
+                        <Text style={styles.level}>Level {user?.totalXp ?? "3"}</Text>
                     </View>
                 </View>
                 <EventCarousel></EventCarousel>
