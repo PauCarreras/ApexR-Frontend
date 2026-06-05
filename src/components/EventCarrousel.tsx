@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import type { UserEvents } from "@/api/user";
 import { colors } from "@/constants/colors";
 import {
     FlatList,
@@ -24,41 +25,18 @@ type UserEvent = {
     image: ImageSourcePropType;
 };
 
-const TEST_EVENTS: UserEvent[] = [
-    {
-        id: "1",
-        name: "Event 1",
-        location: "Lidl parking",
-        date: "20 Junio 2027",
-        time: "20:20",
-        image: require("@/assets/images/eventsBackground/eventBackground2.png"),
-    },
-    {
-        id: "2",
-        name: "Event 2",
-        location: "Circuit Barcelona",
-        date: "22 Junio 2027",
-        time: "18:30",
-        image: require("@/assets/images/eventsBackground/eventBackground3.png"),
-    },
-    {
-        id: "3",
-        name: "Event 3",
-        location: "Parking Norte",
-        date: "25 Junio 2027",
-        time: "21:00",
-        image: require("@/assets/images/eventsBackground/eventBackground4.png"),
-    },
-];
-
 const MAX_EVENTS = 3;
 const RADIUS = 8;
 
-export default function EventCarousel() {
+type EventCarouselProps = {
+    events?: UserEvents[];
+};
+
+export default function EventCarousel({ events: userEvents = [] }: EventCarouselProps) {
     const [cardWidth, setCardWidth] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const events = TEST_EVENTS.slice(0, MAX_EVENTS);
+    const events = userEvents.slice(0, MAX_EVENTS).map(mapUserEventToSlide);
     const hasEvents = events.length > 0;
 
     function handleLayout(event: LayoutChangeEvent) {
@@ -112,6 +90,48 @@ export default function EventCarousel() {
             )}
         </View>
     );
+}
+
+function mapUserEventToSlide(event: UserEvents, index: number): UserEvent {
+    const images = [
+        require("@/assets/images/eventsBackground/eventBackground2.png"),
+        require("@/assets/images/eventsBackground/eventBackground3.png"),
+        require("@/assets/images/eventsBackground/eventBackground4.png"),
+    ];
+    return {
+        id: event.Id ?? event.id ?? String(index),
+        name: event.Name ?? event.name ?? "Untitled event",
+        location: event.LocationName ?? event.locationName ?? "Location pending",
+        date: formatEventDate(event.EventDate ?? event.eventDate),
+        time: formatEventTime(event.EventTime ?? event.eventTime),
+        image: images[index % images.length],
+    };
+}
+
+function formatEventDate(value?: string) {
+    if (!value) {
+        return "Date pending";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    return date.toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    });
+}
+
+function formatEventTime(value?: string) {
+    if (!value) {
+        return "Time pending";
+    }
+
+    return value.split(".")[0].slice(0, 5);
 }
 
 function EventSlide({

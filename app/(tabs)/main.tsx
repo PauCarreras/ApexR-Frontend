@@ -3,7 +3,7 @@ import FastAccess from "@/components/fastAccessRow";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import { router } from "expo-router";
-import { GetUserInfo, UserInfo } from "@/api/user";
+import { GetUserInfo, UserInfo, UserEvents, GetUserEvents } from "@/api/user";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -28,6 +28,7 @@ export default function LoginScreen() {
     const [user, setUser] = useState<UserInfo | null>(null);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
     const [error, setError] = useState("");
+    const [events, setEvents] = useState<UserEvents[]>([]);
 
     useEffect(() => {
         async function loadUser() {
@@ -46,7 +47,20 @@ export default function LoginScreen() {
                 setIsLoadingUser(false);
             }
         }
+        async function loadEvents() {
+            try {
+                const userEvents = await GetUserEvents();
+                setEvents(userEvents);
+            }
+            catch (error) {
+                console.log(error);
+            }
+            finally {
+
+            }
+        }
         loadUser();
+        loadEvents();
     }, [])
 
     if (isLoadingUser) {
@@ -101,7 +115,7 @@ export default function LoginScreen() {
                         <Text style={styles.level}>Level {user?.totalXp ?? "3"}</Text>
                     </View>
                 </View>
-                <EventCarousel></EventCarousel>
+                <EventCarousel events={events}></EventCarousel>
                 <View style={{ alignItems: "center", marginTop: 12, flexDirection: "row", gap: "3%" }}>
                     <Text style={{ color: colors.text.title, fontWeight: "700" }}>
                         Your Performance
