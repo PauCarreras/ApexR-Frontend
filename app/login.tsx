@@ -1,8 +1,8 @@
+import { login } from "@/api/auth";
+import { saveToken } from "@/auth/tokenStorage";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { login } from "@/api/auth";
-import { saveToken } from "@/auth/tokenStorage";
 import {
   ActivityIndicator,
   Dimensions,
@@ -32,7 +32,6 @@ export default function LoginScreen() {
 
     setError("");
     setIsLoading(true);
-
     try {
       const data = await login(usernameOrEmail.trim(), password);
       await saveToken(data.accessToken);

@@ -1,3 +1,4 @@
+import { UserStats } from "@/api/user";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -9,36 +10,55 @@ type StatItem = {
     icon: keyof typeof Ionicons.glyphMap;
 };
 
-const MOCK_STATS: StatItem[] = [
-    {
-        id: "segments",
-        label: "SEGMENTS",
-        value: "12",
-        detail: "+3 this month ↑",
-        icon: "map-outline",
-    },
-    {
-        id: "km",
-        label: "TOTAL KM",
-        value: "235.4 km",
-        detail: "+32.1 km ↑",
-        icon: "speedometer-outline",
-    },
-    {
-        id: "events",
-        label: "EVENTS",
-        value: "4",
-        detail: "2 upcoming ↑",
-        icon: "trophy-outline",
-    },
-];
+type PerformanceStatsProps = {
+    stats: UserStats | null;
+};
 
-export default function PerformanceStats() {
+function formatDistance(distanceDriven?: number) {
+    if (distanceDriven == null) {
+        return "-";
+    }
+
+    return `${distanceDriven.toFixed(1)} km`;
+}
+
+function formatDrivingTime(drivingTime?: number) {
+    if (drivingTime == null) {
+        return "-";
+    }
+
+    return `${drivingTime} min`;
+}
+
+export default function PerformanceStats({ stats }: PerformanceStatsProps) {
+    const displayedStats: StatItem[] = [
+        {
+            id: "distance",
+            label: "TOTAL KM",
+            value: formatDistance(stats?.distanceDriven),
+            detail: "Distance driven",
+            icon: "speedometer-outline",
+        },
+        {
+            id: "events",
+            label: "EVENTS",
+            value: String(stats?.eventsParticipated ?? "-"),
+            detail: "Events participated",
+            icon: "trophy-outline",
+        },
+        {
+            id: "time",
+            label: "DRIVING TIME",
+            value: formatDrivingTime(stats?.drivingTime),
+            detail: "Time behind wheel",
+            icon: "time-outline",
+        },
+    ];
+
     return (
         <View style={styles.section}>
-
             <View style={styles.cards}>
-                {MOCK_STATS.map((item) => (
+                {displayedStats.map((item) => (
                     <View key={item.id} style={styles.card}>
                         <Ionicons name={item.icon} size={24} color="#C40000" />
 

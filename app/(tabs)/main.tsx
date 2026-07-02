@@ -1,24 +1,24 @@
+import { GetUserEvents, GetUserInfo, GetUserStats, UserEvents, UserInfo, UserStats } from "@/api/user";
+import EventCarousel from "@/components/EventCarrousel";
 import HeaderWithBackandImage from "@/components/HeaderBackButtons";
 import FastAccess from "@/components/fastAccessRow";
+import PerformanceStats from "@/components/performanceRow";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
-import { router } from "expo-router";
-import { GetUserInfo, UserInfo, UserEvents, GetUserEvents } from "@/api/user";
-import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
+    ActivityIndicator,
     Dimensions,
     Image,
     ImageBackground,
+    Pressable,
     StyleSheet,
     Text,
-    View,
-    ActivityIndicator,
-    Pressable
+    View
 } from "react-native";
-import PerformanceStats from "@/components/performanceRow";
-import EventCarousel from "@/components/EventCarrousel";
-import { useEffect, useState } from "react";
 
 const { width } = Dimensions.get("window");
 const logoSize = width * 0.6;
@@ -29,12 +29,12 @@ export default function LoginScreen() {
     const [isLoadingUser, setIsLoadingUser] = useState(true);
     const [error, setError] = useState("");
     const [events, setEvents] = useState<UserEvents[]>([]);
+    const [stats, setStats] = useState<UserStats | null>(null);
 
     useEffect(() => {
         async function loadUser() {
             try {
                 const currentUser = await GetUserInfo();
-                console.log("TotalXp: ", currentUser.totalXp);
                 setUser(currentUser);
             } catch (error) {
                 if (error instanceof Error && error.message === "UNAUTHORIZED") {
@@ -45,6 +45,21 @@ export default function LoginScreen() {
                 setError("Could not load user info")
             } finally {
                 setIsLoadingUser(false);
+            }
+        }
+        async function loadStats(){
+            try{
+                const userStats = await GetUserStats();
+                setStats(userStats);
+                console.log("una patata");
+            }
+            catch(error){
+                if (error instanceof Error && error.message === "UNAUTHORIZED") {
+                    router.replace("/login");
+                    return;
+                }
+                console.log(error);
+                setError("Could not load user info")
             }
         }
         async function loadEvents() {
@@ -59,8 +74,10 @@ export default function LoginScreen() {
 
             }
         }
-        loadUser();
+        loadStats();
         loadEvents();
+        loadUser();
+
     }, [])
 
     if (isLoadingUser) {
@@ -132,7 +149,7 @@ export default function LoginScreen() {
                     </Pressable>
                 </View>
                 <View>
-                    <PerformanceStats />
+                    <PerformanceStats stats={stats} />
                     <View style={styles.fastAccessSection}>
                         <Text style={styles.fastAccessTitle}>Fast Access</Text>
                         <FastAccess />

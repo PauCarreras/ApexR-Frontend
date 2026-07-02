@@ -34,7 +34,7 @@ export default function RegisterScreen() {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "http://10.61.3.19:5000";
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "http://192.168.1.50:5000";
 
     const passwordRules = [
         {
