@@ -6,8 +6,9 @@ export type UserInfo = {
     Username: string;
     DisplayName: string | null;
     AvatarUrl: string | null;
-    totalXp?:number;
+    TotalXp: number;
     CreatedAtUtc: string;
+    Level: "Normal" | "Vip" | "Developer";
 }
 export type UserEvents = {
     Id?: string;
@@ -26,13 +27,13 @@ export type UserEvents = {
     eventType?: string;
 }
 export type UserStats ={
-    segmentsDriven?: number;
-    distanceDriven?: number;
-    eventsParticipated?: number;
-    preferredVehicle?: string;
-    uniqueSegmentsDriven?: number;
-    favoriteSurface?: string;
-    drivingTime?: number;
+    totalDistanceDriven: number;
+    segmentsCompleted: number;
+    favoriteSurface: string;
+    favoriteSegment: string;
+    favoriteCar: string;
+    avgSpeed: number;
+    eventsParticipated: number;
 }
 
 export async function GetUserInfo(): Promise<UserInfo> {

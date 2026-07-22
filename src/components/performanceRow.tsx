@@ -14,20 +14,20 @@ type PerformanceStatsProps = {
     stats: UserStats | null;
 };
 
-function formatDistance(distanceDriven?: number) {
-    if (distanceDriven == null) {
+function formatDistance(totalDistanceDriven?: number) {
+    if (totalDistanceDriven == null) {
         return "-";
     }
 
-    return `${distanceDriven.toFixed(1)} km`;
+    return `${totalDistanceDriven.toFixed(1)} km`;
 }
 
-function formatDrivingTime(drivingTime?: number) {
-    if (drivingTime == null) {
+function formatSpeed(avgSpeed?: number) {
+    if (avgSpeed == null) {
         return "-";
     }
 
-    return `${drivingTime} min`;
+    return `${avgSpeed.toFixed(1)} km/h`;
 }
 
 export default function PerformanceStats({ stats }: PerformanceStatsProps) {
@@ -35,24 +35,24 @@ export default function PerformanceStats({ stats }: PerformanceStatsProps) {
         {
             id: "distance",
             label: "TOTAL KM",
-            value: formatDistance(stats?.distanceDriven),
-            detail: "Distance driven",
+            value: formatDistance(stats?.totalDistanceDriven),
+            detail: "",
             icon: "speedometer-outline",
+        },
+        {
+            id: "segments",
+            label: "SEGMENTS",
+            value: String(stats?.segmentsCompleted ?? "-"),
+            detail: "",
+            icon: "map-outline",
         },
         {
             id: "events",
             label: "EVENTS",
             value: String(stats?.eventsParticipated ?? "-"),
-            detail: "Events participated",
+            detail: "",
             icon: "trophy-outline",
-        },
-        {
-            id: "time",
-            label: "DRIVING TIME",
-            value: formatDrivingTime(stats?.drivingTime),
-            detail: "Time behind wheel",
-            icon: "time-outline",
-        },
+        }
     ];
 
     return (

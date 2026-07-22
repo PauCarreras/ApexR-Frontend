@@ -1,4 +1,5 @@
 import HeaderWithBackandImage from "@/components/HeaderBackButtons";
+import { apiUrl } from "@/api/config";
 import { colors } from "@/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
@@ -33,8 +34,6 @@ export default function RegisterScreen() {
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL ?? "http://192.168.1.50:5000";
 
     const passwordRules = [
         {

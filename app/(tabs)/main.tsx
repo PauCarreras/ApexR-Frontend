@@ -46,14 +46,14 @@ export default function LoginScreen() {
             } finally {
                 setIsLoadingUser(false);
             }
+
         }
-        async function loadStats(){
-            try{
+        async function loadStats() {
+            try {
                 const userStats = await GetUserStats();
                 setStats(userStats);
-                console.log("una patata");
             }
-            catch(error){
+            catch (error) {
                 if (error instanceof Error && error.message === "UNAUTHORIZED") {
                     router.replace("/login");
                     return;
@@ -129,7 +129,7 @@ export default function LoginScreen() {
                             resizeMode="contain"
                             style={styles.profilePic}
                         />
-                        <Text style={styles.level}>Level {user?.totalXp ?? "3"}</Text>
+                        <Text style={styles.level}>Level {user?.TotalXp ?? 0}</Text>
                     </View>
                 </View>
                 <EventCarousel events={events}></EventCarousel>
